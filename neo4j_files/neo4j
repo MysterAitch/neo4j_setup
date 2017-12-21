@@ -1,3 +1,4 @@
+# https://neo4j.com/developer/kb/how-do-i-set-max-open-files-for-debian-installs/
 # /etc/default/neo4j
 ######################
 # This file is only used for the sysvinit service (/etc/init.d/neo4j)
