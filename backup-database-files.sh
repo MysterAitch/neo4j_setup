@@ -4,7 +4,7 @@ sudo service neo4j stop
 # Define some variables to be used 
 # (notably/primarily so that the timestamp remains consistent between uses within this script)
 timestamp=$(date +%Y%m%d_%H%M%S%3N)
-foldername=neo4j-db-export-"$timestamp"
+foldername=db-neo4j-db-export-"$timestamp"
 filename="$foldername".cypher
 
 # Make directory to be used for this export
