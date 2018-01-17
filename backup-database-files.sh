@@ -1,5 +1,5 @@
 # Stop the service to enable changes
-#sudo service neo4j stop
+sudo service neo4j stop
 
 # Define some variables to be used 
 # (notably/primarily so that the timestamp remains consistent between uses within this script)
@@ -14,4 +14,4 @@ mkdir ~/"$foldername"
 cp -r /var/lib/neo4j/data/databases/graph.db ~/"$foldername"
 
 # Restart the service
-#sudo service neo4j start
+sudo service neo4j start
