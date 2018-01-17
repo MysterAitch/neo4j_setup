@@ -1,7 +1,7 @@
 # Stop the service to enable changes
 #sudo service neo4j stop
 
-timestamp=$(date +%Y%m%d%H_%M%S%3N)
+timestamp=$(date +%Y%m%d_%H%M%S%3N)
 foldername=neo4j-db-export-"$timestamp"
 #filename=foldername
 
