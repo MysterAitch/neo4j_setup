@@ -1,3 +1,5 @@
+set -x # Activate debugging
+
 # Stop the service to enable changes
 sudo service neo4j stop
 
@@ -15,3 +17,5 @@ cp -r /var/lib/neo4j/data/databases/graph.db ~/"$foldername"
 
 # Restart the service
 sudo service neo4j start
+
+set +x # Rectivate debugging
