@@ -1,3 +1,5 @@
+set -x # Activate debugging
+
     # Overwrite config file with own (primarily to enable non-local access)
     sudo cp ./neo4j_files/neo4j.conf /etc/neo4j/neo4j.conf
     
@@ -9,3 +11,5 @@
 
     # Restart the service to enable changes
     sudo service neo4j restart
+
+set +x # Rectivate debugging
