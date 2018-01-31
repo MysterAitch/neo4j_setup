@@ -1,3 +1,5 @@
+set -x # Activate debugging
+
     # Update System
     sudo apt-get update
     sudo apt-get -y upgrade
@@ -10,3 +12,5 @@
 
     ## Until APOC is available for v3.2, stick with v3.1
     sudo apt-get install -y neo4j=3.3.2
+
+set +x # Rectivate debugging
