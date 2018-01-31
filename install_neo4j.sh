@@ -9,4 +9,4 @@
     sudo apt-get update
 
     ## Until APOC is available for v3.2, stick with v3.1
-    sudo apt-get install -y neo4j=3.1.4
+    sudo apt-get install -y neo4j=3.3.2
