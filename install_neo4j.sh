@@ -11,6 +11,6 @@ set -x # Activate debugging
     sudo apt-get update
 
     # Install Neo4j
-    sudo apt-get install -y neo4j=3.3.2
+    sudo apt-get install -y neo4j=3.3.3
 
 set +x # Rectivate debugging
