@@ -56,7 +56,8 @@ ignoreip = 127.0.0.1/8
 ignorecommand =
 
 # "bantime" is the number of seconds that a host is banned.
-bantime  = 600
+## RH update to ban for an hour (60 x 60secs = 3600secs)
+bantime  = 3600
 
 # A host is banned if it has generated "maxretry" during the last "findtime"
 # seconds.
