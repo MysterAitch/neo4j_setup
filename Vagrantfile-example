@@ -1,0 +1,78 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+  ## Use base canonical image.
+  config.vm.box = "ubuntu/xenial64"
+  
+  ## Setup synced folder such that we may edit the neo4j config via the host
+  #config.vm.synced_folder "../data", "/etc/neo4j/", create: true
+  #config.vm.synced_folder "../data", "/home/ubuntu/", create: true
+  
+  #config.vm.synced_folder "etc_neo4j/", "/etc/neo4j", create: true, type: "virtualbox"
+  #config.vm.synced_folder "var_lib_neo4j", "/var/lib/neo4j", create: true, type: "virtualbox"
+  #config.vm.synced_folder "var_log_neo4j", "/var/log/neo4j", create: true, type: "virtualbox"
+  
+  
+  
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
+  
+  ## Setup IP for VM (enables access via 192.168.56.101:7474).
+  config.vm.network :private_network, ip: "192.168.56.106"
+  
+  ## Setup port forwarding (enables access to VW via localhost:7474)
+  ## Update: Removal of port forwarding given that it is not required (access directly via IP rather than locally-forwarded ports)
+  #config.vm.network :forwarded_port, guest: 7687, host: 8687, id: "bolt"
+  #config.vm.network :forwarded_port, guest: 7473, host: 8473, id: "http"
+  #config.vm.network :forwarded_port, guest: 7474, host: 8474, id: "https"
+  
+  
+  ## Add password to root account so that when SSH'ing via regular SSH client, we may run sudo commands
+  config.vm.provision "shell", inline: <<-SHELL
+    # Create user/password
+    echo "ubuntu:ubuntu" | sudo chpasswd
+  SHELL
+  
+  
+  ## Update apt before installing anything.
+  config.vm.provision "shell", inline: <<-SHELL
+    # Update System
+    sudo apt-get update
+    sudo apt-get -y upgrade
+  SHELL
+
+  ## Prep
+  config.vm.provision "shell", inline: <<-SHELL
+    # Ensure git is installed / available.
+    sudo apt-get install -y git
+  SHELL
+  
+  ## Prep
+  
+  config.vm.provision "shell", inline: <<-SHELL
+    # Ensure latest copy of setup files
+    git clone https://github.com/MysterAitch/neo4j_setup.git
+    cd ./neo4j_setup
+    git checkout -b neo4j-3.4.7
+    git pull origin neo4j-3.4.7
+    
+    # Run install / setup scriptsvagrant 
+    ./install_neo4j.sh
+    ./setup_neo4j.sh
+    
+    # Sleep a short period while waiting for the service to (re)start
+    sleep 5s
+    ./update_neo4j_pass.sh
+    
+    # ?import data
+    #/usr/bin/neo4j-shell -v -file /vagrant/import.cypher ## NB: Do not use where the file contains `&&` -> used as a delimiter between commands.
+    # cat ~/cypher-exports-20180131_140713721_edited-for-cypher-shell.cypher | /usr/bin/cypher-shell -u neo4j -p neo4j-pass
+  
+  SHELL
+  
+end
